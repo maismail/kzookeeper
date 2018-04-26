@@ -239,11 +239,12 @@ link node['kzookeeper']['base_dir'] do
   to node['kzookeeper']['home']
 end
 
-
-kagent_config service_name do
-  service "kafka"
-  log_file "#{node['kzookeeper']['base_dir']}/zookeeper.log"
-  config_file "#{node['kzookeeper']['base_dir']}/conf/zoo.cfg"
+if node['kagent']['enabled'] == "true"
+  kagent_config service_name do
+    service "kafka"
+    log_file "#{node['kzookeeper']['base_dir']}/zookeeper.log"
+    config_file "#{node['kzookeeper']['base_dir']}/conf/zoo.cfg"
+  end
 end
 
 if systemd == true
